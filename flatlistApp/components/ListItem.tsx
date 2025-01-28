@@ -13,7 +13,7 @@ export default ListItem;
 const styles = StyleSheet.create({
   list: {
     backgroundColor: colors.secondary,
-    padding: 5,
+    padding: 6,
     height: 60,
     width: 350,
     borderTopLeftRadius: 15,
