@@ -55,7 +55,12 @@ export default function Index() {
                       item.id === selectedId ? colors.primary : colors.secondary
                   }
                 ]}>
-                  <Text style={styles.titleText}>{item.title}</Text>
+                  <Text style={[styles.titleText, 
+                    {
+                      color: 
+                      item.id === selectedId ? colors.text.light : colors.text.dark
+                    }
+                  ]}>{item.title}</Text>
                 </View>
               </TouchableOpacity>
             )}
