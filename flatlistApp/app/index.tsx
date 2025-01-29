@@ -5,10 +5,38 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+import { useState } from "react";
 import colors from "../styles/colors";
 import defaultStyles from "../styles/defaultStyles";
 
 export default function Index() {
+  const [selectedId, setSelectedId] = useState<string>("")
+
+  type dataType = {
+    id: string; // unique identifier
+    title: string; // text we see in flatlist
+
+  }
+
+  const DATA: dataType[] = [
+    {id: "1", title: "First"},
+    {id: "2", title: "Second"},
+    {id: "3", title: "Third"},
+    {id: "4", title: "Fourth"},
+    {id: "5", title: "Fifth"},
+  ];
+  
+  /*
+  delcaring a function called selectedList that recieves
+  a param of type dataType that we will refer to as 'item'
+  I can access the values of item using dot notation
+  */
+
+  const selectedList = (item: dataType) => {
+    setSelectedId(item.id);
+    console.log("selected" + item.title);
+  };
+
   return (
     <View style={defaultStyles.container}>
       <View style={defaultStyles.titleContainer}>
@@ -16,7 +44,22 @@ export default function Index() {
       </View>
       <View style={[defaultStyles.textContainer, { flex: 1 }]}>
         <View style={styles.flatlist}>
-          <Text>This is where our list will go</Text>
+          <FlatList
+            data={DATA}
+            keyExtractor={(item: dataType) => item.id}
+            renderItem={({item}) => (
+              <TouchableOpacity onPress={() => selectedList(item)}>
+                <View style={[styles.titleContainer, 
+                  {
+                    backgroundColor: 
+                      item.id === selectedId ? colors.primary : colors.secondary
+                  }
+                ]}>
+                  <Text style={styles.titleText}>{item.title}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
         </View>
       </View>
     </View>
@@ -32,6 +75,7 @@ const styles = StyleSheet.create({
     width: 300,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
+    backgroundColor: "lightblue",
   },
   titleText: {
     fontSize: 24,
